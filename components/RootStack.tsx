@@ -30,7 +30,7 @@ const RootStack: FunctionComponent = () => {
     }).catch(e => {
         console.log(e)
     })
-    console.log(location)
+    
     return (
         <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
