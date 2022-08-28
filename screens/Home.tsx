@@ -1,26 +1,26 @@
-import { Text, View, StyleSheet, Image, Button, SafeAreaView} from 'react-native';
-import React, { FunctionComponent  } from 'react'
+import { Text, View, StyleSheet, Image, Button} from 'react-native';
+import React from 'react'
 
 import { RootStackParamList } from '../components/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import MainContainer from '../components/MainContainer';
+import NavBar from '../components/NavBar';
+
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
-const Home: FunctionComponent<Props> = ({navigation}) => {
+const Home = ({ navigation, route }: Props) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <MainContainer>
         <View style={styles.header}>
-          <Text style={styles.headertext}>Green Electricity Forecast</Text>
+          	<Text style={styles.headertext}>Green Electricity Forecast</Text>
         </View>
-        {/* <Image style={styles.tinyLogo} source={require('@expo/snack-static/react-native-logo.png')}></Image> */}
+		{/* <Image style={styles.tinyLogo} source={require('@expo/snack-static/react-native-logo.png')}></Image> */}
         <Image style={styles.container} source={require('../assets/images/background.jpg')} />
-          {/* <ForecastView apiBaseUrl={apiBaseUrl}/> */}
-        <View style={styles.footer}>
-          {/* <Image style={styles.footerimage} source={require('./assets/images/edflogo.png')} /> */}
-          <Text style={styles.footertext}>This app shows the forecast carbon intensity of GB electricity in gCO2/kWh. Lower numbers mean your electricity is greener. Data provided by the National Grid. Visit carbonintensity.org.uk for details.</Text>
-        <Button title="map" onPress={() => navigation.navigate('Map')} />
-        </View>
-    </SafeAreaView>
+		{/* <ForecastView apiBaseUrl={apiBaseUrl}/> */}
+		<Button title="map" onPress={() => navigation.navigate('Map')} />
+        <NavBar active={route.name}/>
+    </MainContainer>
   )
 }
  export default Home

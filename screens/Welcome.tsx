@@ -1,5 +1,5 @@
 import { View, Text, Button, SafeAreaView, TextInput  } from 'react-native'
-import React, { FunctionComponent, useState } from 'react'
+import React, {  useState } from 'react'
 
 import { RootStackParamList } from '../components/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -14,7 +14,7 @@ const setData = async (location: string) => {
   }
 }
 
-const Welcome: FunctionComponent<Props> = ({navigation}) => {
+const Welcome = ({ navigation }: Props) => {
   const [location, setLocation] = useState<string>("")
   return (
     <SafeAreaView style={{flex: 1}}>

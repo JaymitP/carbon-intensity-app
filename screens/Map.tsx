@@ -1,16 +1,18 @@
 import { View, Text, Button, SafeAreaView  } from 'react-native'
-import React, { FunctionComponent } from 'react'
+import React from 'react'
 
 import { RootStackParamList } from '../components/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import MainContainer from '../components/MainContainer';
+import NavBar from '../components/NavBar';
 type Props = NativeStackScreenProps<RootStackParamList, "Map">;
 
-const Map: FunctionComponent<Props> = ({navigation}) => {
+const Map = ({ navigation, route }: Props) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <MainContainer>
       <Text>MapScreen</Text>
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
-    </SafeAreaView>
+      <NavBar active={route.name}/>
+    </MainContainer>
   )
 }
 
