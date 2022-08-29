@@ -1,5 +1,6 @@
-import {SafeAreaView, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import React, { ReactNode } from 'react'
+import {SafeAreaView, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import {StatusBar} from 'react-native'
 
 interface Props {
     children : ReactNode,
@@ -9,8 +10,9 @@ interface Props {
 const MainContainer = (props: Props) => {
   return (
     // Cast to object since spread with generic type is not support, can be avoided through styled components
-    <SafeAreaView style={{...styles.container,...(props.style as object)}}>
-        {props.children}
+    <SafeAreaView style={[styles.container,props.style]}>
+      <StatusBar />
+      {props.children}
     </SafeAreaView>
   )
 }
@@ -22,6 +24,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width: null,
       height: null,
+      backgroundColor: '#fff',
     },
   });
   
