@@ -1,21 +1,27 @@
 import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
+import DonutChartLegend from "./DonutChartLegend";
 
-interface DonutChartData {
+export interface DonutChartData {
   [k: string]: {
     value: number;
-    color: any;
+    color: string;
     gradientCenterColor: string;
   };
+}
+
+interface DonutChartProps {
+  centerText: string;
+  data: Array<{ fuel: number; perc: number }>;
 }
 
 const FUEL_CATEGORIES = ["renewable", "nuclear", "fossil fuels", "other"];
 
 const FUEL_COLOUR_MAP = {
-  renewable: "#1196E0",
-  nuclear: "#125BB0",
-  "fossil fuels": "#042375",
-  other: "#01174F",
+  renewable: ["#1196E0", "#0063AD"],
+  nuclear: ["#125BB0", "#00287D"],
+  "fossil fuels": ["#042375", "#000042"],
+  other: ["#01174F", "#00001C"],
 };
 
 const FUEL_TYPE_MAP = [
@@ -34,7 +40,11 @@ const formatData = (
   const pieData = Object.fromEntries(
     FUEL_CATEGORIES.map((key) => [
       key,
-      { value: 0, color: FUEL_COLOUR_MAP[key], gradientCenterColor: "black" },
+      {
+        value: 0,
+        color: FUEL_COLOUR_MAP[key][0],
+        gradientCenterColor: FUEL_COLOUR_MAP[key][1],
+      },
     ])
   );
   for (const { fuel, perc } of data) {
@@ -43,23 +53,19 @@ const formatData = (
   return pieData;
 };
 
-interface DonutChartProps {
-  centerText: string;
-  data: Array<{ fuel: number; perc: number }>;
-}
-
 const DonutChart = (props: DonutChartProps) => {
-  const pieData = Object.values(formatData(props.data));
+  const formattedData = formatData(props.data);
+  const pieData = Object.values(formattedData);
 
   return (
-    <View style={{ padding: 20, alignItems: "center" }}>
+    <View style={{ flexDirection: "row" }}>
       <PieChart
         data={pieData}
         donut
         showGradient
-        radius={90}
+        radius={80}
         innerRadius={60}
-        innerCircleColor={"#CA4141"} // set colour
+        innerCircleColor={"#FA6B6B"} // set colour
         centerLabelComponent={() => {
           return (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -73,6 +79,7 @@ const DonutChart = (props: DonutChartProps) => {
           );
         }}
       />
+      <DonutChartLegend data={formattedData} />
     </View>
   );
 };
