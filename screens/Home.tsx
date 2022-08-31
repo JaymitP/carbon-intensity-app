@@ -9,10 +9,29 @@ import InnerContainer from "../components/InnerContainer";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Body from "../components/Body";
+import DonutChart from "../components/Charts/DonutChart";
 
 import { getData24Hours } from "../utils/API";
-import PieChart from "react-native-pie-chart";
-
+const donutData = [
+  { name: "<5", value: 19 },
+  { name: "5-9", value: 20 },
+  { name: "10-14", value: 19 },
+  { name: "15-19", value: 24 },
+  { name: "20-24", value: 22 },
+  { name: "25-29", value: 29 },
+  { name: "30-34", value: 22 },
+  { name: "35-39", value: 18 },
+  { name: "40-44", value: 23 },
+  { name: "45-49", value: 19 },
+  { name: "50-54", value: 16 },
+  { name: "55-59", value: 19 },
+  { name: "60-64", value: 28 },
+  { name: "65-69", value: 17 },
+  { name: "70-74", value: 20 },
+  { name: "75-79", value: 17 },
+  { name: "80-84", value: 18 },
+  { name: "≥85", value: 21 },
+];
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const Home = ({ route }: Props) => {
@@ -22,31 +41,22 @@ const Home = ({ route }: Props) => {
 
   useEffect(() => {
     getData24Hours(route.params.location)
-      .then((responseData) => {
-        setCarbonIntensity24Hours(responseData.data.data);
+      .then((responseJson) => {
+        setCarbonIntensity24Hours(responseJson.data.data);
       })
       .catch((err) => console.log(err));
   }, []);
-  const widthAndHeight = 250;
-  const series = [123, 321, 123, 789, 537];
-  const sliceColor = ["#F44336", "#2196F3", "#FFEB3B", "#4CAF50", "#FF9800"];
+
   return (
     carbonIntensity24Hours && (
       <MainContainer>
         <Header title={route.params.location} />
         <Body>
           <InnerContainer>
-            <Text style={{ fontSize: 20 }}>
-              <PieChart
-                widthAndHeight={widthAndHeight}
-                series={series}
-                sliceColor={sliceColor}
-                doughnut={true}
-                coverRadius={0.45}
-                coverFill={"#FFF"}
-              />
-              {carbonIntensity24Hours[24]?.intensity.forecast}
-            </Text>
+            <DonutChart
+              centerText={carbonIntensity24Hours[24]?.intensity.forecast}
+              data={carbonIntensity24Hours[24]?.generationmix}
+            />
           </InnerContainer>
         </Body>
         {/* <Image style={styles.container} source={require('../assets/images/background.jpg')} /> */}
