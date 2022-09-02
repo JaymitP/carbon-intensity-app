@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import { DonutChartData } from "./DonutChart";
+import percentRound from "percent-round";
 
 interface LegendLabelProps {
   label: string;
@@ -18,14 +19,13 @@ const LegendElement = (props: LegendLabelProps): JSX.Element => {
       style={{
         flexDirection: "row",
         alignItems: "center",
-        width: 120,
-        marginRight: 20,
+        marginBottom: 5,
       }}
     >
       <View
         style={{
-          height: 40,
-          width: 40,
+          height: 35,
+          width: 35,
           borderRadius: 10,
           backgroundColor: props.color,
           marginRight: 10,
@@ -33,23 +33,52 @@ const LegendElement = (props: LegendLabelProps): JSX.Element => {
           justifyContent: "center",
         }}
       >
-        <Text style={{ fontSize: 16, color: "white" }}>{props.value}%</Text>
+        <Text style={{ fontSize: 14, color: "white" }}>{props.value}%</Text>
       </View>
-      <Text style={{ color: "black" }}>{props.label}</Text>
+      <Text
+        style={{
+          fontSize: 16,
+          color: "#424242",
+          fontFamily: "UrbanistSemiBold",
+          textTransform: "capitalize",
+        }}
+      >
+        {props.label}
+      </Text>
     </View>
   );
 };
 
 const DonutChartLegend = (props: LegendProps): JSX.Element => {
-  Object.keys(props.data).map((label) => {
-    console.log({ label, ...props.data[label] });
-  });
+  // for each key in the data object, return the value and the label to an array
+  const legendPercentage = percentRound(
+    Object.values(props.data).map((fuel) => fuel.value)
+  );
+
   return (
-    <View>
-      {Object.keys(props.data).map((key) => (
-        <LegendElement {...props.data[key]} label={key} />
-      ))}
+    <View style={{ padding: 10, marginLeft: 30 }}>
+      {Object.keys(props.data).map((key, index) => {
+        return (
+          <LegendElement
+            {...{ ...props.data[key], value: legendPercentage[index] }}
+            label={key}
+            key={key}
+          />
+        );
+      })}
     </View>
   );
 };
 export default DonutChartLegend;
+
+// let perc = props.data[key].value;
+// let newPerc = 0;
+// if ( (perc - Math.floor(perc)> roundingError) && roundingError!=0) {
+//   console.log(perc);
+//   newPerc = Math.floor(perc);
+// } else {
+//   console.log("Round", perc);
+//   newPerc = Math.round(perc);
+// }
+// roundingError += newPerc - perc;
+// console.log(roundingError);

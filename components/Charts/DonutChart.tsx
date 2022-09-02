@@ -12,10 +12,20 @@ export interface DonutChartData {
 
 interface DonutChartProps {
   centerText: string;
+  index: string;
   data: Array<{ fuel: number; perc: number }>;
 }
 
+// const INTENSITY_COLOUR_MAP = {
 const FUEL_CATEGORIES = ["renewable", "nuclear", "fossil fuels", "other"];
+
+const INTENSITY_COLOUR_MAP = {
+  low: "#68cfae",
+  "very low": "#b0f3be",
+  moderate: "#ffeb93",
+  high: "#feb679",
+  "very high": "#ee6e6e",
+};
 
 const FUEL_COLOUR_MAP = {
   renewable: ["#1196E0", "#0063AD"],
@@ -65,7 +75,7 @@ const DonutChart = (props: DonutChartProps) => {
         showGradient
         radius={80}
         innerRadius={60}
-        innerCircleColor={"#FA6B6B"} // set colour
+        innerCircleColor={INTENSITY_COLOUR_MAP[props.index]} // set colour
         centerLabelComponent={() => {
           return (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -74,7 +84,9 @@ const DonutChart = (props: DonutChartProps) => {
               >
                 {props.centerText}g
               </Text>
-              <Text style={{ fontSize: 14, color: "black" }}>Excellent</Text>
+              <Text style={{ fontSize: 14, color: "black" }}>
+                {props.index}
+              </Text>
             </View>
           );
         }}
