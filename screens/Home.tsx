@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Body from "../components/Body";
 import DonutChart from "../components/Charts/DonutChart";
+import ChartWithAdjustingPointer from "../components/Charts/LineChart";
 
 import { getData24Hours } from "../utils/API";
 
@@ -32,12 +33,15 @@ const Home = ({ route }: Props) => {
       <MainContainer>
         <Header title={route.params.location} />
         <Body>
-          <InnerContainer>
+          <InnerContainer style={{ marginBottom: 20 }}>
             <DonutChart
               centerText={carbonIntensity24Hours[23]?.intensity.forecast}
               index={carbonIntensity24Hours[23]?.intensity.index}
               data={carbonIntensity24Hours[23]?.generationmix}
             />
+          </InnerContainer>
+          <InnerContainer>
+            <ChartWithAdjustingPointer />
           </InnerContainer>
         </Body>
         {/* <Image style={styles.container} source={require('../assets/images/background.jpg')} /> */}
