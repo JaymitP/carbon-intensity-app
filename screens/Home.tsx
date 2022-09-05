@@ -10,7 +10,8 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Body from "../components/Body";
 import DonutChart from "../components/Charts/DonutChart";
-import ChartWithAdjustingPointer from "../components/Charts/LineChart";
+import LineChart from "../components/Charts/LineChart";
+import Test from "../components/Charts/Test";
 
 import { getData24Hours } from "../utils/API";
 
@@ -18,8 +19,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const Home = ({ route }: Props) => {
   // Store current carbon intensity in async storage
-  const [carbonIntensity24Hours, setCarbonIntensity24Hours] =
-    useState<Object>(null);
+  const [carbonIntensity24Hours, setCarbonIntensity24Hours] = useState(null);
 
   useEffect(() => {
     getData24Hours(route.params.location)
@@ -28,6 +28,7 @@ const Home = ({ route }: Props) => {
       })
       .catch((err) => console.log(err));
   }, []);
+
   return (
     carbonIntensity24Hours && (
       <MainContainer>
@@ -41,7 +42,16 @@ const Home = ({ route }: Props) => {
             />
           </InnerContainer>
           <InnerContainer>
-            <ChartWithAdjustingPointer />
+            <LineChart
+              chartData={carbonIntensity24Hours.map((item, index) => {
+                return {
+                  value: item.intensity.forecast,
+                  date: item.to,
+                  // label: !(index % 12) ? item.to.substring(0, 10) : null,
+                };
+              })}
+            />
+            {/* <Test carbonIntensity24Hours={carbonIntensity24Hours} /> */}
           </InnerContainer>
         </Body>
         {/* <Image style={styles.container} source={require('../assets/images/background.jpg')} /> */}
