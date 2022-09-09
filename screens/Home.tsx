@@ -47,7 +47,10 @@ const Home = ({ route }: Props) => {
                 return {
                   value: item.intensity.forecast,
                   date: item.to,
-                  // label: !(index % 12) ? item.to.substring(0, 10) : null,
+                  label:
+                    !index || (index + 1) % 12 == 0
+                      ? item.to.substring(11, item.to.length - 1)
+                      : null,
                 };
               })}
             />

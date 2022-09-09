@@ -2,12 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { LineChart as GiftedLineChart } from "react-native-gifted-charts";
 
-const screenWidth = Dimensions.get("window").width;
 interface ItemType {
   value: number;
   date: string;
-  label?: string;
-  labelComponent?: JSX.Element;
+  label: string | null;
+  labelComponent: () => void;
 }
 
 interface LineChartProps {
@@ -15,7 +14,7 @@ interface LineChartProps {
 }
 
 const LineChart = ({ chartData }: LineChartProps) => {
-  const width = screenWidth - 100;
+  const width = Dimensions.get("window").width - 100;
   return (
     <View
       style={
@@ -37,7 +36,29 @@ const LineChart = ({ chartData }: LineChartProps) => {
       </Text>
       <GiftedLineChart
         areaChart
-        data={chartData}
+        data={chartData.map((item, index) => {
+          return {
+            value: item.value,
+            date: item.date,
+            label: item.label,
+            labelComponent:
+              item.labelComponent ??
+              (() => (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontFamily: "Urbanist",
+                    color: "black",
+                    width: 30,
+                    position: "absolute",
+                    left: chartData.length - 1 == index ? -30 : 0,
+                  }}
+                >
+                  {item.label}
+                </Text>
+              )),
+          };
+        })}
         width={width}
         height={150}
         initialSpacing={0}
@@ -52,7 +73,6 @@ const LineChart = ({ chartData }: LineChartProps) => {
         endFillColor="#cfebff"
         startOpacity={0.8}
         endOpacity={0.8}
-        rulesColor="black"
         yAxisTextStyle={{ color: "black", fontSize: 12 }}
         showVerticalLines
         noOfVerticalLines={4}
@@ -100,7 +120,7 @@ const LineChart = ({ chartData }: LineChartProps) => {
                   }}
                 >
                   <Text style={{ fontWeight: "bold", textAlign: "center" }}>
-                    {"$" + items[0].value + ".0"}
+                    {items[0].value}
                   </Text>
                 </View>
               </View>
@@ -120,73 +140,3 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 });
-
-// const exampleData = [
-//   {
-//     value: 160,
-//     date: "1 Apr 2022",
-//     label: "4:00 PM",
-//     labelTextStyle: { color: "black", width: 60 },
-//     labelComponent: () => <Text style={styles.label}>{"4:00 AM"}</Text>,
-//   },
-//   { value: 180, date: "2 Apr 2022" },
-//   { value: 190, date: "3 Apr 2022" },
-//   { value: 180, date: "4 Apr 2022" },
-//   { value: 140, date: "5 Apr 2022" },
-//   { value: 145, date: "6 Apr 2022" },
-//   { value: 160, date: "7 Apr 2022" },
-//   { value: 200, date: "8 Apr 2022" },
-
-//   { value: 220, date: "9 Apr 2022" },
-//   {
-//     value: 240,
-//     date: "10 Apr 2022",
-//     label: "10:00 PM",
-//     labelTextStyle: { width: 80 },
-//     labelComponent: () => <Text style={styles.label}>{"10:00 AM"}</Text>,
-//   },
-//   { value: 280, date: "11 Apr 2022" },
-//   { value: 260, date: "12 Apr 2022" },
-//   { value: 340, date: "13 Apr 2022" },
-//   { value: 385, date: "14 Apr 2022" },
-//   { value: 280, date: "15 Apr 2022" },
-//   { value: 390, date: "16 Apr 2022" },
-
-//   {
-//     value: 370,
-//     date: "17 Apr 2022",
-//     label: "4:00 AM",
-//     labelTextStyle: { width: 100 },
-//     labelComponent: () => <Text style={styles.label}>{"4:00 PM"}</Text>,
-//   },
-//   { value: 285, date: "18 Apr 2022" },
-//   { value: 295, date: "19 Apr 2022" },
-//   { value: 300, date: "20 Apr 2022" },
-//   { value: 280, date: "21 Apr 2022" },
-//   { value: 295, date: "22 Apr 2022" },
-//   { value: 260, date: "23 Apr 2022" },
-//   { value: 255, date: "24 Apr 2022" },
-
-//   {
-//     value: 190,
-//     date: "25 Apr 2022",
-//     label: "10:00 AM",
-//     labelTextStyle: { width: 10 },
-//     labelComponent: () => <Text style={styles.label}>{"10:00 PM"}</Text>,
-//   },
-//   { value: 220, date: "26 Apr 2022" },
-//   { value: 205, date: "27 Apr 2022" },
-//   { value: 230, date: "28 Apr 2022" },
-//   { value: 210, date: "29 Apr 2022" },
-//   {
-//     value: 200,
-//     date: "30 Apr 2022",
-//     label: "4:00 PM",
-//     labelTextStyle: { width: 80 },
-//     labelComponent: () => <Text style={styles.label}>{"4:00 AM"}</Text>,
-//   },
-//   { value: 240, date: "1 May 2022" },
-//   { value: 250, date: "2 May 2022" },
-//   { value: 280, date: "3 May 2022" },
-//   { value: 250, date: "4 May 2022" },
-// ];
