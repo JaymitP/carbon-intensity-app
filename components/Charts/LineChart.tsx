@@ -14,7 +14,7 @@ interface LineChartProps {
 }
 
 const LineChart = ({ chartData }: LineChartProps) => {
-  const width = Dimensions.get("window").width - 100;
+  const width = Dimensions.get("window").width * 0.8;
   return (
     <View
       style={
@@ -50,8 +50,9 @@ const LineChart = ({ chartData }: LineChartProps) => {
                     fontFamily: "Urbanist",
                     color: "black",
                     width: 30,
-                    position: "absolute",
-                    left: chartData.length - 1 == index ? -30 : 0,
+                    position: "relative",
+                    left: index != 0 ? (index / 24) * -10 : 0,
+                    marginBottom: 10,
                   }}
                 >
                   {item.label}
@@ -60,10 +61,10 @@ const LineChart = ({ chartData }: LineChartProps) => {
           };
         })}
         width={width}
-        height={150}
+        height={140}
         initialSpacing={0}
         noOfSections={4}
-        stepHeight={150 / 4}
+        stepHeight={140 / 4}
         maxValue={400}
         hideDataPoints
         spacing={width / 48}

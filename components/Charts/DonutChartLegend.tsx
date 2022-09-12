@@ -56,14 +56,25 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
   );
 
   return (
-    <View style={{ padding: 10, marginLeft: 30 }}>
+    <View
+      style={{
+        padding: 10,
+        marginLeft: 30,
+        flex: 1,
+        justifyContent: "center",
+      }}
+    >
       {Object.keys(props.data).map((key, index) => {
         return (
-          <LegendElement
-            {...{ ...props.data[key], value: legendPercentage[index] }}
-            label={key}
-            key={key}
-          />
+          <>
+            {legendPercentage[index] != 0 && (
+              <LegendElement
+                {...{ ...props.data[key], value: legendPercentage[index] }}
+                label={key}
+                key={key}
+              />
+            )}
+          </>
         );
       })}
     </View>
