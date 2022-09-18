@@ -14,6 +14,7 @@ interface LegendProps {
 }
 
 const LegendElement = (props: LegendLabelProps): JSX.Element => {
+  console.log(props.label);
   return (
     <View
       style={{
@@ -21,6 +22,7 @@ const LegendElement = (props: LegendLabelProps): JSX.Element => {
         alignItems: "center",
         marginBottom: 5,
       }}
+      key={props.label}
     >
       <View
         style={{
@@ -60,7 +62,6 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
       style={{
         padding: 10,
         marginLeft: 30,
-        flex: 1,
         justifyContent: "center",
       }}
     >
@@ -71,7 +72,6 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
               <LegendElement
                 {...{ ...props.data[key], value: legendPercentage[index] }}
                 label={key}
-                key={key}
               />
             )}
           </>

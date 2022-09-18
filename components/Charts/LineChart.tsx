@@ -49,7 +49,7 @@ const LineChart = ({ chartData }: LineChartProps) => {
                     fontSize: 12,
                     fontFamily: "Urbanist",
                     color: "black",
-                    width: 30,
+                    width: 40,
                     position: "relative",
                     left: index != 0 ? (index / 24) * -10 : 0,
                     marginBottom: 10,
