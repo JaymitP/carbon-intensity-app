@@ -1,36 +1,37 @@
-# TypeScript Example
+# Carbon Intesity App
 
-<p>
-  <!-- iOS -->
-  <img alt="Supports Expo iOS" longdesc="Supports Expo iOS" src="https://img.shields.io/badge/iOS-4630EB.svg?style=flat-square&logo=APPLE&labelColor=999999&logoColor=fff" />
-  <!-- Android -->
-  <img alt="Supports Expo Android" longdesc="Supports Expo Android" src="https://img.shields.io/badge/Android-4630EB.svg?style=flat-square&logo=ANDROID&labelColor=A4C639&logoColor=fff" />
-  <!-- Web -->
-  <img alt="Supports Expo Web" longdesc="Supports Expo Web" src="https://img.shields.io/badge/web-4630EB.svg?style=flat-square&logo=GOOGLE-CHROME&labelColor=4285F4&logoColor=fff" />
-</p>
+A mobile app for iOS and Android that can be used to minimise the users' CO2 emissions at a local level by advising users when to turn on/off energy-intensive applications.\
+Users can create reminders for low/ high forecasted carbon intensity periods. Uses the Carbon Intensity API by National Grid ESO.\
 
-```sh
-npx create-react-native-app -t with-typescript
+## Setup
+
+This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).\
+[**Screenshots**](##Screenshots) of the app can be found in the screenshots folder.
+
+Technologies and libraries used:
+
+- **React Native** and **Typescript**
+- **Expo** and **Expo Go** for mobile development
+- **Style Sheets** for styling
+- **React Navigation** for navigation
+- [**Carbon Intensity API**](https://carbon-intensity.github.io/api-definitions/#carbon-intensity-api-v2-0-0) by National Grid ESO
+
+## Quick Overview
+
+First, refer to the official React Native documentation to configure the React native development environment
+
+**STEP 1**: Clone and install dependencies
+
+```
+git clone https://github.com/JaymitP/carbon-intensity-app.git
+cd app
+npm install
 ```
 
-TypeScript is a superset of JavaScript which gives you static types and powerful tooling in Visual Studio Code including autocompletion and useful inline warnings for type errors.
+**STEP 2**: Install Expo Go on your mobile device and scan the QR code
 
-## 🚀 How to use
+```
+expo start
+```
 
-#### Creating a new project
-
-- Install the CLI: `npm i -g expo-cli`
-- Create a project: `npx create-react-native-app -t with-typescript`
-- `cd` into the project
-
-### Adding TypeScript to existing projects
-
-- Create a blank TypeScript config: `touch tsconfig.json`
-- Run `yarn start` or `npm run start` to automatically configure TypeScript
-- Rename files to TypeScript, `.tsx` for React components and `.ts` for plain typescript files
-
-> 💡 You can disable the TypeScript setup in Expo CLI with the environment variable `EXPO_NO_TYPESCRIPT_SETUP=1 expo start`
-
-## 📝 Notes
-
-- [Expo TypeScript guide](https://docs.expo.dev/versions/latest/guides/typescript/)
+## Screenshots
