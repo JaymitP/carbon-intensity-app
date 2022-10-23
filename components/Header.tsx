@@ -9,8 +9,10 @@ interface Props {
 const Header = (props: Props) => {
   return (
     // Cast to object since spread with generic type is not support, can be avoided through styled components
-    <View style={[styles.header, props.style]}>
-      <Text style={styles.headerText}>{props.title.toUpperCase()}</Text>
+    <View style={[styles.header]}>
+      <Text style={[styles.headerText, props.style]}>
+        {props.title.toUpperCase()}
+      </Text>
     </View>
   );
 };

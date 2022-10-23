@@ -2,13 +2,16 @@ import * as Notifications from "expo-notifications";
 import { Subscription } from "expo-modules-core";
 import { schedulePushNotification } from "../utils/notifications";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Text } from "react-native";
 import { RootStackParamList } from "../components/RootStack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import MainContainer from "../components/MainContainer";
 import NavBar from "../components/NavBar";
+import { Agenda, Calendar, ExpandableCalendar } from "react-native-calendars";
+import Header from "../components/Header";
+import Reminders from "../components/Reminders";
 type Props = NativeStackScreenProps<RootStackParamList, "Reminder">;
 
 const Reminder = ({ route }: Props) => {
@@ -33,10 +36,25 @@ const Reminder = ({ route }: Props) => {
     },
     trigger: { seconds: 1 },
   };
-
+  const [selectedDay, setSelectedDay] = React.useState(
+    new Date().toISOString().split("T")[0]
+  );
   return (
     <MainContainer>
-      <Text>Reminder</Text>
+      <Header title="Reminders" />
+      <Agenda
+        // Enable the option to swipe between months. Default = false
+        // enableSwipeMonths={true}
+        hideKnob={true}
+        renderEmptyData={() => {
+          return <Reminders day={selectedDay} />;
+        }}
+        loadItemsForMonth={(day) => setSelectedDay(day.dateString)}
+        style={{}}
+        selected={selectedDay}
+        firstDay={1}
+      />
+
       <Button
         title="Press to schedule a notification"
         onPress={async () => {
