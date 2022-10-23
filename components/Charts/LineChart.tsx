@@ -1,12 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { LineChart as GiftedLineChart } from "react-native-gifted-charts";
+// import { LineChart as GiftedLineChart } from "react-native-gifted-charts";
+import { LineChart as ChartKitLineChart } from "react-native-chart-kit";
 
 interface ItemType {
   value: number;
   date: string;
-  label: string | null;
-  labelComponent: () => void;
 }
 
 interface LineChartProps {
@@ -14,7 +13,30 @@ interface LineChartProps {
 }
 
 const LineChart = ({ chartData }: LineChartProps) => {
-  const width = Dimensions.get("window").width * 0.8;
+  var labels = chartData.reduce(
+    (result, { date }, index) =>
+      !index || (index + 1) % 8 == 0
+        ? result.push(date.substring(11, date.length - 1)) && result
+        : result,
+    []
+  );
+  labels = labels.map((label, i) => (i % 3 == 0 ? label : ""));
+  const width = Dimensions.get("window").width * 0.9;
+  const data = {
+    labels: labels,
+    // labels: chartData.map(({ date }, index) => {
+    //   if (index % 24 == 0) return date.substring(11, date.length - 1);
+    // }),
+
+    datasets: [
+      {
+        data: chartData.map(({ value }) => value),
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+  };
+
   return (
     <View
       style={
@@ -34,7 +56,43 @@ const LineChart = ({ chartData }: LineChartProps) => {
       >
         Carbon Intensity forecast
       </Text>
-      <GiftedLineChart
+      <ChartKitLineChart
+        data={data}
+        width={width}
+        height={200}
+        segments={4}
+        yAxisInterval={12}
+        xLabelsOffset={-10}
+        onDataPointClick={({ value, getColor }) => console.log(value)}
+        chartConfig={{
+          propsForVerticalLabels: {
+            fontSize: 12,
+            translateX: 20,
+          },
+          backgroundColor: "#ffffff",
+          backgroundGradientFrom: "#ffffff",
+          backgroundGradientTo: "#ffffff",
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          // style: {
+          //   borderRadius: 16,
+          // },
+          propsForDots: {
+            r: "1",
+            strokeWidth: "1",
+            stroke: "#ffa726",
+          },
+        }}
+        // withDots={false}
+        bezier
+        // decorator={() => <View />}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+      />
+      {/* <GiftedLineChart
         areaChart
         data={chartData.map((item, index) => {
           return {
@@ -49,9 +107,9 @@ const LineChart = ({ chartData }: LineChartProps) => {
                     fontSize: 12,
                     fontFamily: "Urbanist",
                     color: "black",
-                    width: 40,
+                    width: 20,
                     position: "relative",
-                    left: index != 0 ? (index / 24) * -10 : 0,
+                    // left: index != 0 ? (index / 24) * -10 : 0,
                     marginBottom: 10,
                   }}
                 >
@@ -60,13 +118,13 @@ const LineChart = ({ chartData }: LineChartProps) => {
               )),
           };
         })}
-        width={width}
+        width={width + 10}
         height={140}
         initialSpacing={0}
         noOfSections={4}
         stepHeight={140 / 4}
         maxValue={400}
-        hideDataPoints
+        // hideDataPoints
         spacing={width / 48}
         color="#94d3ff"
         thickness={2}
@@ -81,7 +139,8 @@ const LineChart = ({ chartData }: LineChartProps) => {
         verticalLinesSpacing={75}
         yAxisColor="black"
         xAxisColor="black"
-        horizontalRulesStyle={{ color: "green", fontSize: 4 }}
+
+        // horizontalRulesStyle={{ color: "green", fontSize: 4 }}
         pointerConfig={{
           pointerStripColor: "black",
           pointerColor: "lightgray",
@@ -128,7 +187,7 @@ const LineChart = ({ chartData }: LineChartProps) => {
             );
           },
         }}
-      />
+      /> */}
     </View>
   );
 };

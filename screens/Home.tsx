@@ -33,12 +33,13 @@ const Home = ({ route }: Props) => {
     carbonIntensity24Hours && (
       <MainContainer>
         <Header title={route.params.location} />
+        <Text>{`Last refreshed ${new Date().toLocaleTimeString()}`}</Text>
         <Body>
           <InnerContainer style={{ marginBottom: 20 }}>
             <DonutChart
-              centerText={carbonIntensity24Hours[23]?.intensity.forecast}
-              index={carbonIntensity24Hours[23]?.intensity.index}
-              data={carbonIntensity24Hours[23]?.generationmix}
+              centerText={carbonIntensity24Hours[24]?.intensity.forecast}
+              index={carbonIntensity24Hours[24]?.intensity.index}
+              data={carbonIntensity24Hours[24]?.generationmix}
             />
           </InnerContainer>
           <InnerContainer>
@@ -47,10 +48,6 @@ const Home = ({ route }: Props) => {
                 return {
                   value: item.intensity.forecast,
                   date: item.to,
-                  label:
-                    !index || (index + 1) % 24 == 0
-                      ? item.to.substring(11, item.to.length - 1)
-                      : null,
                 };
               })}
             />

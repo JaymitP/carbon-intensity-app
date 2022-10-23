@@ -14,7 +14,6 @@ interface LegendProps {
 }
 
 const LegendElement = (props: LegendLabelProps): JSX.Element => {
-  console.log(props.label);
   return (
     <View
       style={{
@@ -72,6 +71,7 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
               <LegendElement
                 {...{ ...props.data[key], value: legendPercentage[index] }}
                 label={key}
+                key={key}
               />
             )}
           </>
