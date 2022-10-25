@@ -11,7 +11,6 @@ import NavBar from "../components/NavBar";
 import Body from "../components/Body";
 import DonutChart from "../components/Charts/DonutChart";
 import LineChart from "../components/Charts/LineChart";
-import Test from "../components/Charts/Test";
 
 import { getData24Hours } from "../utils/API";
 
@@ -21,12 +20,19 @@ const Home = ({ route }: Props) => {
   // Store current carbon intensity in async storage
   const [carbonIntensity24Hours, setCarbonIntensity24Hours] = useState(null);
 
-  useEffect(() => {
+  const fetchData = () =>
     getData24Hours(route.params.location)
       .then((responseJson) => {
         setCarbonIntensity24Hours(responseJson.data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.log(error);
+      });
+
+  useEffect(() => {
+    fetchData();
+    const comInterval = setInterval(fetchData, 1000 * 60 * 30);
+    return () => clearInterval(comInterval);
   }, []);
 
   return (
@@ -37,9 +43,9 @@ const Home = ({ route }: Props) => {
         <Body>
           <InnerContainer style={{ marginBottom: 20 }}>
             <DonutChart
-              centerText={carbonIntensity24Hours[24]?.intensity.forecast}
-              index={carbonIntensity24Hours[24]?.intensity.index}
-              data={carbonIntensity24Hours[24]?.generationmix}
+              centerText={carbonIntensity24Hours[23]?.intensity.forecast}
+              index={carbonIntensity24Hours[23]?.intensity.index}
+              data={carbonIntensity24Hours[23]?.generationmix}
             />
           </InnerContainer>
           <InnerContainer>
@@ -47,7 +53,10 @@ const Home = ({ route }: Props) => {
               chartData={carbonIntensity24Hours.map((item, index) => {
                 return {
                   value: item.intensity.forecast,
-                  date: item.to,
+                  date: new Date(item.to).toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                  }),
                 };
               })}
             />

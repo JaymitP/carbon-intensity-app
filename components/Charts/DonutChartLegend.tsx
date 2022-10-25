@@ -33,6 +33,7 @@ const LegendElement = (props: LegendLabelProps): JSX.Element => {
           alignItems: "center",
           justifyContent: "center",
         }}
+        key={props.label}
       >
         <Text style={{ fontSize: 14, color: "white" }}>{props.value}%</Text>
       </View>
@@ -55,7 +56,6 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
   const legendPercentage = percentRound(
     Object.values(props.data).map((fuel) => fuel.value)
   );
-
   return (
     <View
       style={{
@@ -71,7 +71,8 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
               <LegendElement
                 {...{ ...props.data[key], value: legendPercentage[index] }}
                 label={key}
-                key={key}
+                // key={key}
+                key={index}
               />
             )}
           </>
