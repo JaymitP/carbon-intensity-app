@@ -13,17 +13,35 @@ import DonutChart from "../components/Charts/DonutChart";
 import LineChart from "../components/Charts/LineChart";
 
 import { getData24Hours } from "../utils/API";
+import Forecast from "../components/Forecast/Forecast";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+
+export interface filteredDataItem {
+  value: number;
+  date: string;
+}
 
 const Home = ({ route }: Props) => {
   // Store current carbon intensity in async storage
   const [carbonIntensity24Hours, setCarbonIntensity24Hours] = useState(null);
-
+  const [filteredData, setFilteredData] =
+    useState<Array<filteredDataItem>>(null);
   const fetchData = () =>
     getData24Hours(route.params.location)
       .then((responseJson) => {
         setCarbonIntensity24Hours(responseJson.data.data);
+        setFilteredData(
+          responseJson.data.data.map((item) => {
+            return {
+              value: item.intensity.forecast,
+              date: new Date(item.to).toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+              }),
+            };
+          })
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -49,19 +67,10 @@ const Home = ({ route }: Props) => {
             />
           </InnerContainer>
           <InnerContainer>
-            <LineChart
-              chartData={carbonIntensity24Hours.map((item, index) => {
-                return {
-                  value: item.intensity.forecast,
-                  date: new Date(item.to).toLocaleTimeString("en-US", {
-                    hour: "numeric",
-                    minute: "numeric",
-                  }),
-                };
-              })}
-            />
+            <LineChart chartData={filteredData} />
             {/* <Test carbonIntensity24Hours={carbonIntensity24Hours} /> */}
           </InnerContainer>
+          <Forecast data={filteredData} />
         </Body>
         {/* <Image style={styles.container} source={require('../assets/images/background.jpg')} /> */}
         <NavBar active={route.name} />

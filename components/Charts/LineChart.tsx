@@ -2,14 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 // import { LineChart as GiftedLineChart } from "react-native-gifted-charts";
 import { LineChart as ChartKitLineChart } from "react-native-chart-kit";
-
-interface ItemType {
-  value: number;
-  date: string;
-}
+import { filteredDataItem } from "../../screens/Home";
 
 interface LineChartProps {
-  chartData: Array<ItemType>;
+  chartData: Array<filteredDataItem>;
 }
 
 const LineChart = ({ chartData }: LineChartProps) => {

@@ -35,3 +35,7 @@ expo start
 ```
 
 ## Screenshots
+
+## Todo
+
+- Convert date strings from API to Date objects and localise

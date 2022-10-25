@@ -82,15 +82,3 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
   );
 };
 export default DonutChartLegend;
-
-// let perc = props.data[key].value;
-// let newPerc = 0;
-// if ( (perc - Math.floor(perc)> roundingError) && roundingError!=0) {
-//   console.log(perc);
-//   newPerc = Math.floor(perc);
-// } else {
-//   console.log("Round", perc);
-//   newPerc = Math.round(perc);
-// }
-// roundingError += newPerc - perc;
-// console.log(roundingError);
