@@ -25,23 +25,11 @@ export interface filteredDataItem {
 const Home = ({ route }: Props) => {
   // Store current carbon intensity in async storage
   const [carbonIntensity24Hours, setCarbonIntensity24Hours] = useState(null);
-  const [filteredData, setFilteredData] =
-    useState<Array<filteredDataItem>>(null);
+
   const fetchData = () =>
     getData24Hours(route.params.location)
       .then((responseJson) => {
         setCarbonIntensity24Hours(responseJson.data.data);
-        setFilteredData(
-          responseJson.data.data.map((item) => {
-            return {
-              value: item.intensity.forecast,
-              date: new Date(item.to).toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-              }),
-            };
-          })
-        );
       })
       .catch((error) => {
         console.log(error);
@@ -52,6 +40,16 @@ const Home = ({ route }: Props) => {
     const comInterval = setInterval(fetchData, 1000 * 60 * 30);
     return () => clearInterval(comInterval);
   }, []);
+
+  const filteredData = carbonIntensity24Hours?.map((item) => {
+    return {
+      value: item.intensity.forecast,
+      date: new Date(item.to).toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+      }),
+    };
+  });
 
   return (
     carbonIntensity24Hours && (

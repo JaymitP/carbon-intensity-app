@@ -39,3 +39,5 @@ expo start
 ## Todo
 
 - Convert date strings from API to Date objects and localise
+- Prevent calendar view onClick function returning reminder component multiple times -> reduce number of API calls
+- Fix bug: route undefined in Reminder screen

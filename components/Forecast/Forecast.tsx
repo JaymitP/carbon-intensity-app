@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
-import ForecastItem from "./ForecastItem";
+import ReminderItem from "../Reminders/ReminderItem";
 import { filteredDataItem } from "../../screens/Home";
 interface ForecastProps {
   data: Array<filteredDataItem>;
@@ -16,8 +16,8 @@ const Forecast = (props: ForecastProps) => {
   //   );
   return (
     <ScrollView>
-      <ForecastItem label={"High"} {...carbonIntensityData[0]} />
-      <ForecastItem
+      <ReminderItem label={"High"} {...carbonIntensityData[0]} />
+      <ReminderItem
         label={"Low"}
         {...carbonIntensityData[carbonIntensityData.length - 1]}
       />

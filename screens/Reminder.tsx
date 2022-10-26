@@ -3,16 +3,25 @@ import { Subscription } from "expo-modules-core";
 import { schedulePushNotification } from "../utils/notifications";
 
 import React, { useEffect, useRef } from "react";
-import { Button, Text } from "react-native";
+import { Button } from "react-native";
 import { RootStackParamList } from "../components/RootStack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import MainContainer from "../components/MainContainer";
 import NavBar from "../components/NavBar";
-import { Agenda, Calendar, ExpandableCalendar } from "react-native-calendars";
+import { Agenda } from "react-native-calendars";
 import Header from "../components/Header";
-import Reminders from "../components/Reminders";
+import ReminderBody from "../components/Reminders/ReminderBody";
 type Props = NativeStackScreenProps<RootStackParamList, "Reminder">;
+
+export const notificationContent = {
+  content: {
+    title: "Reminder",
+    body: "Here is the notification body",
+    data: { data: "placeholder" },
+  },
+  trigger: { seconds: 1 },
+};
 
 const Reminder = ({ route }: Props) => {
   const responseListener = useRef<Subscription>();
@@ -28,14 +37,6 @@ const Reminder = ({ route }: Props) => {
     };
   }, []);
 
-  const notificationContent = {
-    content: {
-      title: "Reminder",
-      body: "Here is the notification body",
-      data: { data: "placeholder" },
-    },
-    trigger: { seconds: 1 },
-  };
   const [selectedDay, setSelectedDay] = React.useState(
     new Date().toISOString().split("T")[0]
   );
@@ -47,7 +48,8 @@ const Reminder = ({ route }: Props) => {
         // enableSwipeMonths={true}
         hideKnob={true}
         renderEmptyData={() => {
-          return <Reminders day={selectedDay} />;
+          // return <Text>No reminders for this day</Text>;
+          return <ReminderBody region={"HA0"} date={selectedDay} />;
         }}
         loadItemsForMonth={(day) => setSelectedDay(day.dateString)}
         style={{}}

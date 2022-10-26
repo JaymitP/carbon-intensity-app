@@ -71,7 +71,6 @@ const DonutChartLegend = (props: LegendProps): JSX.Element => {
               <LegendElement
                 {...{ ...props.data[key], value: legendPercentage[index] }}
                 label={key}
-                // key={key}
                 key={index}
               />
             )}
