@@ -1,9 +1,7 @@
 import * as Notifications from "expo-notifications";
 import { Subscription } from "expo-modules-core";
-import { schedulePushNotification } from "../utils/notifications";
 
 import React, { useEffect, useRef } from "react";
-import { Button } from "react-native";
 import { RootStackParamList } from "../components/RootStack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -55,13 +53,6 @@ const Reminder = ({ route }: Props) => {
         style={{}}
         selected={selectedDay}
         firstDay={1}
-      />
-
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          schedulePushNotification(notificationContent);
-        }}
       />
       <NavBar active={route.name} />
     </MainContainer>

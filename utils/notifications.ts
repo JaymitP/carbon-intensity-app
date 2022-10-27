@@ -1,11 +1,13 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 
 interface scheduleNotificationType {
   content: {
     title: string;
     body: string;
-    data?: any;
+    data: any;
   };
   trigger: {
     seconds: number;
@@ -16,6 +18,33 @@ export async function schedulePushNotification(
   notificationContent: scheduleNotificationType
 ) {
   await Notifications.scheduleNotificationAsync(notificationContent);
+  let date = moment(notificationContent.content.data.date);
+  let newNotification = {};
+  newNotification[date.format("HH:MM:ss")] =
+    notificationContent.content.data.details;
+
+  try {
+    await AsyncStorage.mergeItem(
+      date.format("DD-MM-YYYY"),
+      JSON.stringify(newNotification)
+    );
+    // Implementation using an array of notifications
+    // await AsyncStorage.getItem(date.format("DD-MM-YYYY")).then(
+    //   async (result) => {
+    //     let retrievedData = JSON.parse(result) || [];
+    //     let newNotification = {};
+    //     newNotification[date.format("HH:MM:ss")] =
+    //       notificationContent.content.data.details;
+
+    //     await AsyncStorage.setItem(
+    //       date.format("DD-MM-YYYY"),
+    //       JSON.stringify(retrievedData.concat([newNotification]))
+    //     );
+    //   }
+    // );
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export function setNotificationHandler() {

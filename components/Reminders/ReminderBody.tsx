@@ -25,10 +25,7 @@ const ReminderBody = (props: Props) => {
   const filteredData = carbonIntensity?.map((item) => {
     return {
       value: item.intensity.forecast,
-      date: new Date(item.to).toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-      }),
+      date: item.to,
     };
   });
   filteredData?.sort((a, b) => b.value - a.value);
@@ -51,6 +48,7 @@ export default ReminderBody;
 const styles = StyleSheet.create({
   body: {
     padding: 10,
-    // backgroundColor: "#000",
+    backgroundColor: "#ffffff",
+    flex: 1,
   },
 });
