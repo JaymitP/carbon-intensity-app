@@ -36,6 +36,11 @@ expo start
 
 ## Screenshots
 
+<!-- add both images -->
+
+![alt text](./screenshots/Home.png "Home Screen")
+![alt text](./screenshots/Reminders.png "Reminders Screen")
+
 ## Todo
 
 - Convert date strings from API to Date objects and localise
