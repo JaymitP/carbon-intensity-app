@@ -55,7 +55,6 @@ const Home = ({ route }: Props) => {
     carbonIntensity24Hours && (
       <MainContainer>
         <Header title={route.params.location} />
-        <Text>{`Last refreshed ${new Date().toLocaleTimeString()}`}</Text>
         <Body>
           <InnerContainer style={{ marginBottom: 20 }}>
             <DonutChart
@@ -66,11 +65,9 @@ const Home = ({ route }: Props) => {
           </InnerContainer>
           <InnerContainer>
             <LineChart chartData={filteredData} />
-            {/* <Test carbonIntensity24Hours={carbonIntensity24Hours} /> */}
           </InnerContainer>
           <Forecast data={filteredData} />
         </Body>
-        {/* <Image style={styles.container} source={require('../assets/images/background.jpg')} /> */}
         <NavBar active={route.name} />
       </MainContainer>
     )

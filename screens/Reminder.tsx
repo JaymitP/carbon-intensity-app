@@ -16,7 +16,7 @@ export const notificationContent = {
   content: {
     title: "Reminder",
     body: "Here is the notification body",
-    data: { data: "placeholder" },
+    data: {},
   },
   trigger: { seconds: 1 },
 };

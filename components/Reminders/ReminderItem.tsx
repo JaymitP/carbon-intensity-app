@@ -54,9 +54,11 @@ export default ReminderItem;
 const styles = StyleSheet.create({
   high: {
     backgroundColor: "#acdf87",
+    marginBottom: 10,
   },
   low: {
     backgroundColor: "#f7b4bb",
+    marginBottom: 10,
   },
   body: {
     flex: 1,
@@ -76,10 +78,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 50,
     backgroundColor: "#ffffff",
+    scaleY: 0.5,
+    scaleX: 0.5,
   },
   intensity: {
     backgroundColor: "#ffffff",
-    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height: 40,
     borderRadius: 10,
     // https://ethercreative.github.io/react-native-shadow-generator/
     shadowColor: "#000",
